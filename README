@@ -1,0 +1,10 @@
+This is an illustration of a bug in Sumatra where files
+with a '+' in the filename cannot be displayed or downloaded
+in the web interface.
+
+To reproduce simply type 'make all'. This is equivalent
+to the following:
+
+   make init-sumatra
+   make run
+   ...
