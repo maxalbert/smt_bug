@@ -9,4 +9,4 @@ run:
 
 
 purge:
-	rm -rf .smt/
+	rm -rf .smt/ Data/
