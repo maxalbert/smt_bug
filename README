@@ -2,9 +2,25 @@ This is an illustration of a bug in Sumatra where files
 with a '+' in the filename cannot be displayed or downloaded
 in the web interface.
 
-To reproduce simply type 'make all'. This is equivalent
-to the following:
+To reproduce:
 
    make init-sumatra
    make run
-   ...
+   smtweb
+
+This will create a record for a Sumatra run and open a web
+browser with the Sumatra web interface. Next:
+
+  - Click on the project name to reach the Sumatra dashboard.
+
+  - Click on the link for the Sumatra record that was just created.
+
+  - Scroll down to the "Output files" section.
+
+  - Click on the link for the file "png_file_with_ _symbol_in_filename.png"
+
+This should display the plot contents, but instead there is an empty space.
+When pressing the "Download image" button, an error occurs ("Page not found (404)").
+
+In the error message it becomes apparent that the '+' sign is converted
+to a space (encoded by '%20') in the URL.
