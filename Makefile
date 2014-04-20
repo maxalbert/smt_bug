@@ -1,11 +1,11 @@
 all:
 
 init-sumatra:
-	smt init BugWithPlusSignInFilenames
+	smt init SumatraBug
 	smt configure -e python -m main.py --plain
 
 run:
-	smt run -r "Run to illustrate bug"
+	smt run -r "Create a Sumatra record."
 
 
 purge:
