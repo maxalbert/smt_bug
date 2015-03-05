@@ -1,0 +1,14 @@
+- name: Initialise git repo
+  git: repo=https://github.com/maxalbert/smt_bug.git dest={{ TEST_PROJECT_DIR }} update=no
+
+- name:
+  command: git reset --hard HEAD chdir={{ TEST_PROJECT_DIR }}
+
+- name:
+  command: git clean -f -d chdir={{ TEST_PROJECT_DIR }}
+
+- name: Initialise Sumatra project
+  command: smt init TestProject chdir={{ TEST_PROJECT_DIR }}
+  environment:
+    PATH: ~/sumatra/bin:{{ ansible_env.PATH }}
+    PYTHONPATH: ~/sumatra/:{{ ansible_env.PYTHONPATH }}

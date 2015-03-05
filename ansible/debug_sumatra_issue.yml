@@ -2,5 +2,6 @@
 - hosts: all
   roles:
     - empty_test_project
+    #- minimal_test_project
   tasks:
     # Add tasks here
