@@ -1,0 +1,33 @@
+- name: Install pip and git
+  apt: pkg={{ item }}
+  sudo: yes
+  with_items:
+    - python-pip
+    - git
+    - python-git
+
+- name: Install a more recent version of IPython
+  pip: name=ipython version=3.0.0
+  sudo: yes
+
+- name: Install ipdb
+  pip: name=ipdb
+  sudo: yes
+
+- name: Install django 1.6, otherwise Sumatra chokes
+  pip: name=django version=1.6.10
+  sudo: yes
+
+- name: Install 'parameters' module needed by Sumatra
+  pip: name=parameters
+  sudo: yes
+
+- name: Upgrade git python bindings
+  pip: name=gitpython version=0.3.6
+  sudo: yes
+
+- name: Clone Sumatra into directory ~/sumatra
+  git: repo=https://github.com/open-research/sumatra.git dest=~/sumatra update=no
+
+- lineinfile: line="export PATH=~/sumatra/bin:$PATH" dest=~/.bashrc
+- lineinfile: line="export PYTHONPATH=~/sumatra:$/PYTHONPATH" dest=~/.bashrc

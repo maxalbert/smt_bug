@@ -1,0 +1,14 @@
+- name: Remove test project directory if it exists
+  file: path={{ TEST_PROJECT_DIR }} state=absent
+
+- name: Create directory for test project
+  file: path={{ TEST_PROJECT_DIR }} state=directory
+
+- name: Initialise git repo
+  command: git init chdir={{ TEST_PROJECT_DIR }}
+
+- name: Initialise Sumatra project
+  command: smt init TestProject chdir={{ TEST_PROJECT_DIR }}
+  environment:
+    PATH: ~/sumatra/bin:{{ ansible_env.PATH }}
+    PYTHONPATH: ~/sumatra/:{{ ansible_env.PYTHONPATH }}

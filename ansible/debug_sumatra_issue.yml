@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+    - empty_test_project
+  tasks:
+    # Add tasks here
