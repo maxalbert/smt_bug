@@ -8,7 +8,7 @@
   command: git clean -f -d chdir={{ TEST_PROJECT_DIR }}
 
 - name: Initialise Sumatra project
-  command: smt init TestProject chdir={{ TEST_PROJECT_DIR }}
+  command: make init-sumatra chdir={{ TEST_PROJECT_DIR }}
   environment:
     PATH: ~/sumatra/bin:{{ ansible_env.PATH }}
     PYTHONPATH: ~/sumatra/:{{ ansible_env.PYTHONPATH }}
