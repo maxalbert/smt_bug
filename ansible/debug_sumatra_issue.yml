@@ -1,7 +1,10 @@
 ---
 - hosts: all
   roles:
-    - empty_test_project
+    - { role: sumatra, version: 0.6.0 }
+    - { role: minimal_test_project, num_records: 10, purge: False}
+    #- { role: sumatra, version: 0.7.0 }
+    #- empty_test_project
     #- minimal_test_project
   tasks:
-    # Add tasks here
+    

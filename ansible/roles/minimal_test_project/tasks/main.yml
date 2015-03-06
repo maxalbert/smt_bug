@@ -3,12 +3,24 @@
 
 - name:
   command: git reset --hard HEAD chdir={{ TEST_PROJECT_DIR }}
+  when: purge == True
 
 - name:
   command: git clean -f -d chdir={{ TEST_PROJECT_DIR }}
+  when: purge == True
 
 - name: Initialise Sumatra project
   command: make init-sumatra chdir={{ TEST_PROJECT_DIR }}
   environment:
     PATH: ~/sumatra/bin:{{ ansible_env.PATH }}
     PYTHONPATH: ~/sumatra/:{{ ansible_env.PYTHONPATH }}
+
+- name: Determine number of existing records
+  shell: smt list | sed '/^$/d' | wc -l  chdir={{ TEST_PROJECT_DIR }}
+  register: num_existing_records
+
+# Note: Due to a bug in the with_sequence statement (which doesn't currently work with count=0)
+#       this always creates at least one task.
+- name: Create at least {{ num_records }} records
+  command: make run chdir={{ TEST_PROJECT_DIR }}
+  with_sequence: count={{ [num_records - num_existing_records.stdout|int, 1] | max }}
