@@ -22,18 +22,23 @@
   pip: name=gitpython version=0.3.6
   sudo: yes
 
+- debug: msg="Installing Sumatra version {{ version }}"
+
 - name: Install Django 1.5.12 for Sumatra versions < 0.7
   pip: name=django version=1.5.12
   sudo: yes
-  when: "{{ SUMATRA_VERSION | version_compare('0.7', '<') }}"
+  when: "{{ version | version_compare('0.7', '<') }}"
 
 - name: Install Django 1.6.10 for Sumatra versions >= 0.7
   pip: name=django version=1.6.10
   sudo: yes
-  when: "{{ SUMATRA_VERSION | version_compare('0.7', '>=') }}"
+  when: "{{ version | version_compare('0.7', '>=') }}"
 
 - name: Clone Sumatra into directory ~/sumatra and check out the desired version
-  git: repo=https://github.com/open-research/sumatra.git dest=~/sumatra update=no version={{ SUMATRA_VERSION }}
+  git: repo=https://github.com/open-research/sumatra.git dest=~/sumatra update=no
+
+- name: Check out the desired Sumatra version
+  command: git checkout {{ version }} chdir=~/sumatra
 
 - lineinfile: line="export PATH=~/sumatra/bin:$PATH" dest=~/.bashrc
 - lineinfile: line="export PYTHONPATH=~/sumatra:$/PYTHONPATH" dest=~/.bashrc
