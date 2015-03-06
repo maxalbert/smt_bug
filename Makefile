@@ -1,6 +1,8 @@
 all:
 
-init-sumatra:
+init-sumatra: .smt
+
+.smt:
 	smt init SumatraBug
 	smt configure -e python -m main.py --plain
 
@@ -10,3 +12,5 @@ run:
 
 purge:
 	rm -rf .smt/ Data/
+
+.PHONY: all init-sumatra run purge
