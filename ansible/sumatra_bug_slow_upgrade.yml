@@ -1,0 +1,31 @@
+---
+- hosts: all
+  gather_facts: no
+  vars:
+    TEST_PROJECT_DIR: ~/dummy_project
+    SMT_PROJECT_TEMPLATE: /vagrant/smt_dir_with_3_records_for_sumatra_version_0.6.0/
+  environment:
+    PIP_DOWNLOAD_CACHE: ~/.pip_download_cache
+  roles:
+    - { role: sumatra, version: 0.6.0 }
+  tasks:
+    - file: path={{ TEST_PROJECT_DIR }} state=absent
+
+    - file: path={{ TEST_PROJECT_DIR }}/.smt state=directory
+
+    - synchronize: src={{ SMT_PROJECT_TEMPLATE }}/./ dest={{ TEST_PROJECT_DIR }}/.smt rsync_opts=--relative
+
+    - command: sed -i -e 's|PROJECT_PATH|{{ TEST_PROJECT_DIR|expanduser }}|' {{ TEST_PROJECT_DIR }}/.smt/project
+
+    - name: Export records
+      command: smt export chdir={{ TEST_PROJECT_DIR }}
+
+    - name: Upgrade to latest Sumatra version
+      command: git checkout profiling chdir=~/sumatra
+
+    - name: Install Django 1.6.10 for Sumatra version >= 0.7
+      pip: name=django version=1.6.10
+      sudo: yes
+
+    - name: Upgrade records
+      shell: time smt upgrade chdir={{ TEST_PROJECT_DIR }} | tee {{ TEST_PROJECT_DIR }}/output_upgrade.txt
