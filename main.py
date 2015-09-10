@@ -4,7 +4,7 @@ import os
 import sys
 from sumatra.parameters import build_parameters
 
-print "Hello world."
+print("Hello world.")
 
 # It is important not to hard-code the name of the parameter file because
 # Sumatra creates a parameter file 'on the fly' and passes its name to the
