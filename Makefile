@@ -4,10 +4,10 @@ init-sumatra: .smt
 
 .smt:
 	smt init SumatraBug
-	smt configure -e python -m main.py --plain
+	smt configure -e python -m main.py --addlabel=parameters
 
 run:
-	smt run -r "Create a Sumatra record."
+	smt run -r "Create a Sumatra record." defaults.param
 
 
 purge:
