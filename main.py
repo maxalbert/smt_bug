@@ -12,6 +12,8 @@ print("Hello world.")
 paramsfile = sys.argv[1]
 parameters = build_parameters(paramsfile)
 
+print("Parameters: {}".format(parameters))
+
 # Change into the datastore directory to run the simulation there
 wrkdir = os.path.join('Data', parameters['sumatra_label'])
 os.chdir(wrkdir)
