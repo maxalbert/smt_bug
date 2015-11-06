@@ -1,0 +1,9 @@
+name: sumatra-dev
+dependencies:
+  - django
+  - future
+  - pyyaml
+  - pip:
+    - django-tagging
+    - gitpython
+    - parameters
